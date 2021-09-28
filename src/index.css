@@ -1,13 +1,351 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+* {
+  box-sizing: border-box;
+}
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #1f80e0;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  margin: 0px;
+  padding: 0px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.root {
+  display: flex;
+  flex-direction: column;
+}
+header {
+  background-color: #1668b9;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 1rem;
+}
+.mov {
+  display: block;
+  padding-right: 72%;
+  padding-bottom: 10px;
+  color: white;
+  font-family: Courier, monospace;
+  padding-bottom: 0;
+  font-size: 2rem;
+}
+.searchbox {
+  padding-top: 25px;
+}
+.search {
+  background-color: white;
+  border: 1px solid #2f80d1;
+  font-family: Courier, monospace;
+  border-radius: 40px;
+  color: #1668b9;
+  padding: 10px;
+  font-size: 1rem;
+}
+.search:focus {
+  outline: 0;
+}
+.mybutton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px;
+  padding: 10px;
+}
+
+.mybutton .popular {
+  padding: 20px 80px 20px 80px;
+  margin-right: 50px;
+  border-radius: 10px;
+  color: rgb(24, 23, 21);
+  background-color: #1f80e0;
+  font-family: bold Courier, monospace;
+  opacity: 0.6;
+  transition: 0.3s;
+  font-size: 20px;
+}
+.mybutton .popular:hover {
+  opacity: 1;
+  color: white;
+  background-color: #092e57;
+}
+
+.mybutton .upcoming {
+  padding: 20px 80px 20px 80px;
+  margin-right: 50px;
+  border-radius: 10px;
+  background-color: #1f80e0;
+  font-family: Courier, monospace;
+  color: seashell;
+  opacity: 0.6;
+  transition: 0.3s;
+  font-size: 20px;
+  color: rgb(24, 23, 21);
+}
+.mybutton .upcoming:hover {
+  opacity: 1;
+  color: white;
+  background-color: #092e57;
+}
+.mybutton .upcoming:focus {
+  background-color: #002958;
+  color: aliceblue;
+}
+.mybutton .nowplaying {
+  padding: 20px 80px 20px 80px;
+  margin-right: 50px;
+  border-radius: 10px;
+  color: #070d13;
+  background-color: #1f80e0;
+  font-family: Courier, monospace;
+  opacity: 0.6;
+  transition: 0.3s;
+  font-size: 20px;
+}
+.mybutton .nowplaying:hover {
+  opacity: 1;
+  color: white;
+  background-color: #092e57;
+}
+.mybutton .nowplaying:focus {
+  background-color: #002958;
+  color: aliceblue;
+}
+.movie-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 100px;
+}
+.movie {
+  background-color: #3e87d1;
+  width: 250px;
+  display: grid;
+  margin: 20px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 3px;
+}
+.movie img {
+  max-width: 100%;
+}
+.movie-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+}
+.movie h3 {
+  margin: 0rem;
+}
+.movie-overview {
+  position: absolute;
+  background-color: aliceblue;
+  color: #1f80e0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  overflow: auto;
+  max-height: 100%;
+  transform: translateY(100%);
+  transition: 0.5s ease-in-out;
+  border-radius: 20px;
+}
+.movie:hover .movie-overview {
+  transform: translateY(0%);
+}
+.tag {
+  background-color: #092e57;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.tag.red {
+  color: red;
+}
+.tag.green {
+  color: green;
+}
+.tag.yellow {
+  color: yellow;
+}
+.paginationBttns {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding-left: 21%;
+}
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 2px solid #092e57;
+  color: #070d13;
+  cursor: pointer;
+}
+.paginationBttns a:hover {
+  color: white;
+  background-color: #092e57;
+}
+.paginationActive a {
+  color: white;
+  background-color: #092e57;
+}
+.paginationDisabled a {
+  color: rgb(198, 197, 202);
+  border: 1px solid rgb(198, 197, 202);
+}
+.paginationDisabled a:hover {
+  background-color: unset !important;
+  color: unset !important;
+}
+
+/* media */
+@media only screen and (max-width: 480px) {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    width: 100% !important;
+    display: flex;
+    position: sticky;
+  }
+
+  .searchbox {
+    padding-right: 10px;
+    padding-top: 15px;
+  }
+  .mov {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 0pt;
+    padding-right: 10px;
+  }
+  .mybutton {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1px;
+    padding-left: 80px;
+  }
+  .mybutton .nowplaying {
+    width: 100%;
+    height: 40px;
+    font-size: 10px;
+    font-display: center;
+    padding: 10px;
+  }
+  .mybutton .upcoming {
+    width: 100%;
+    height: 40px;
+    font-size: 10px;
+    font-display: center;
+    padding: 10px;
+  }
+  .mybutton .popular {
+    width: 100%;
+    height: 40px;
+    font-size: 10px;
+    font-display: center;
+    padding: 10px;
+  }
+  .movie-container {
+    width: 100% !important;
+    justify-content: center;
+    padding-right: 20%;
+  }
+  .movie {
+    width: 80%;
+    font-size: 15px;
+  }
+  .paginationBttns {
+    width: 100%;
+    justify-content: center;
+    padding-right: 20%;
+  }
+  .paginationBttns a {
+    font-size: 10px;
+    padding: 5px;
+    margin: 5px;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  header {
+    width: 100% !important;
+    display: flex;
+    position: sticky;
+  }
+
+  .searchbox {
+    padding-right: 0px;
+    margin-right: 80px;
+    padding-top: 15pt;
+  }
+  .mov {
+    width: 10%;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 0pt;
+    padding-right: 30%;
+  }
+  .mybutton {
+    border: 1px;
+    padding: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+  }
+  .mybutton .popular {
+    width: 20%;
+    font-size: 10px;
+    text-align: center;
+    padding: 20px;
+    /* padding-left: 0px; */
+  }
+  .mybutton .upcoming {
+    width: 20%;
+    font-size: 10px;
+    text-align: center;
+    padding: 20px;
+  }
+  .mybutton .nowplaying {
+    width: 20%;
+    font-size: 10px;
+    padding: 20px;
+    padding-right: 0;
+    text-align: center;
+    margin-right: 0;
+  }
+  .movie-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0px;
+    padding: 10px;
+  }
+  .movie {
+    width: 25%;
+    font-size: 10px;
+  }
+  .paginate-control {
+    width: 100%;
+  }
+  .paginationBttns {
+    width: 50%;
+    justify-content: center;
+    margin-left: 10%;
+  }
+  .paginationBttns a {
+    font-size: 10px;
+    padding: 5px;
+    margin: 5px;
+  }
 }
