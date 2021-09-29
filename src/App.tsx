@@ -4,6 +4,7 @@ import { checkMovie } from "./components/fetchFunctions";
 import { FEATURE_API, SEARCH_API, UPCOMING_API, NOWPLAYING_API } from "./Api";
 import "./App.css";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 interface IProps {
   movies: {
@@ -31,7 +32,7 @@ const App: React.FC = (): JSX.Element => {
       SetMovies(data.results);
     });
   }, []);
-  const nextScroll = () => {
+  const nextScroll = (): void => {
     let scrollCount = currentpage + 1;
     setCurrentPage(scrollCount);
     checkMovie(api, scrollCount).then((data) => {
@@ -53,7 +54,6 @@ const App: React.FC = (): JSX.Element => {
 
   const searchHandle = (e: any) => {
     console.log(e.target.value);
-    // setSearchmovie(e.target.value);
     let value = e.target.value;
     if (value) {
       setCurrentPage(1);
@@ -63,12 +63,27 @@ const App: React.FC = (): JSX.Element => {
         SetMovies(data.results);
       });
     } else {
+      setCurrentPage(1);
       checkMovie(FEATURE_API, currentpage).then((data) => {
         SetMovies(data.results);
       });
     }
   };
   const optimisedVersion = useCallback(debounce(searchHandle), []);
+
+  const Routing = () => {
+    return (
+      <div>
+        <Router>
+          <Switch>
+            <Route path="Popular" />
+            <Route path="Nowplaying" />
+            <Route path="Upcomming" />
+          </Switch>
+        </Router>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -83,43 +98,60 @@ const App: React.FC = (): JSX.Element => {
           />
         </div>
       </header>
+
       <div className="mybutton">
-        <button
-          className="popular"
-          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            setCurrentPage(1);
-            checkMovie(FEATURE_API, 1).then<void>((data: any) => {
-              setApi(FEATURE_API);
-              SetMovies(data.results);
-            });
-          }}
-        >
-          Popular
-        </button>
-        <button
-          className="upcoming"
-          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            setCurrentPage(1);
-            checkMovie(UPCOMING_API, 1).then((data) => {
-              setApi(UPCOMING_API);
-              SetMovies(data.results);
-            });
-          }}
-        >
-          Upcoming
-        </button>
-        <button
-          className="nowplaying"
-          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            setCurrentPage(1);
-            checkMovie(NOWPLAYING_API, 1).then<void>((data) => {
-              setApi(NOWPLAYING_API);
-              SetMovies(data.results);
-            });
-          }}
-        >
-          Now Playing
-        </button>
+        <Router>
+          <Switch>
+            <Route path="/popular">
+              <button
+                className="popular"
+                onClick={(
+                  event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
+                  setCurrentPage(1);
+                  checkMovie(FEATURE_API, 1).then<void>((data: any) => {
+                    setApi(FEATURE_API);
+                    SetMovies(data.results);
+                  });
+                }}
+              >
+                Popular
+              </button>
+            </Route>
+            <Route path="upcoming">
+              <button
+                className="upcoming"
+                onClick={(
+                  event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
+                  setCurrentPage(1);
+                  checkMovie(UPCOMING_API, 1).then((data) => {
+                    setApi(UPCOMING_API);
+                    SetMovies(data.results);
+                  });
+                }}
+              >
+                Upcoming
+              </button>
+            </Route>
+            <Route path="nowplaying">
+              <button
+                className="nowplaying"
+                onClick={(
+                  event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
+                  setCurrentPage(1);
+                  checkMovie(NOWPLAYING_API, 1).then<void>((data) => {
+                    setApi(NOWPLAYING_API);
+                    SetMovies(data.results);
+                  });
+                }}
+              >
+                Now Playing
+              </button>
+            </Route>
+          </Switch>
+        </Router>
       </div>
       <div className="movie-container">
         {movies.length > 0 &&
